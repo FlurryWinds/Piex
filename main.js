@@ -6,13 +6,17 @@ client.on('ready', () => {
   console.log(`Logged into ${client.guilds.size} servers, ready!`);
 });
 client.on('message', message => {
-	switch(message) {
-		case "Cherri":
-			message.channel.send("WHERE IS SHE!? I WANNA PLAY! IM A GOOD BOY!");
-			break;
-		case "Kurama~":
-			message.channel.send('Of course! *holds out a tray of cookies* For you, <@267987286761799680>');
-			break;
+	if(message.author.bot || message.content.indexOf(config.prefix) !== 0) return;
+	const args = message.content.slice(config.prefix.length).trim().split(" ");
+
+	try {
+		let cmd = require(`./commands/${args[0]}.js`)
+	} catch(e) {
+
 	}
 });
-client.login(config.token);
+try {
+	client.login(config.token);
+} catch(e) {
+	console.error(e);
+}
